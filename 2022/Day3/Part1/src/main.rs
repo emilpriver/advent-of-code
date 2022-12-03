@@ -1,5 +1,4 @@
-use std::cmp::Ordering;
-use std::env;
+use itertools::Itertools;
 use std::fs;
 
 fn main() {
@@ -10,23 +9,31 @@ fn main() {
     let contents_array = contents.lines();
 
     let mut equal_chars: Vec<char> = vec![];
+    let mut total_points: usize = 0;
 
     for line in contents_array {
         let (first_part, last_part) = line.split_at(line.len() / 2);
-        let mut first_part_array = first_part.chars().into_iter();
-        let last_part_array: Vec<char> = last_part.chars().collect();
+        let first_part_array = first_part.chars();
+        let mut last_part_array: Vec<char> = last_part.chars().into_iter().unique().collect();
 
-        loop {
-            match first_part_array.next() {
-                Some(x) => {
-                    if last_part_array.contains(&x) {
-                        equal_chars.push(x);
-                    }
-                },
-                None => break,
+        for x in first_part_array {
+            if last_part_array.contains(&x) {
+                equal_chars.push(x);
+
+                // we need to remove the char from the array
+                last_part_array.remove(last_part_array.iter().position(|&r| r == x).unwrap());
             }
         }
     }
 
-    println!("{:?}", equal_chars)
+    for char in equal_chars {
+        let ascii: usize = char as usize;
+        total_points += if { ascii > 96 } {
+            ascii - 96
+        } else {
+            ascii - 38
+        }
+    }
+
+    println!("total points {:?}", total_points)
 }
