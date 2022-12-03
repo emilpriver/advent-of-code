@@ -28,7 +28,7 @@ fn main() {
 
     for char in equal_chars {
         let ascii: usize = char as usize;
-        total_points += if { ascii > 96 } {
+        total_points += if ascii > 96 {
             ascii - 96
         } else {
             ascii - 38
