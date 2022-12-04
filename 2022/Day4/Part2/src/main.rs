@@ -26,13 +26,13 @@ fn main() {
             let second_elf_range = to_int(second_elf[0])..(to_int(second_elf[1]) + 1);
 
             if first_elf_range.contains(&to_int(second_elf[0]))
-                && first_elf_range.contains(&to_int(second_elf[1]))
+                || first_elf_range.contains(&to_int(second_elf[1]))
             {
                 return 1;
             }
 
             if second_elf_range.contains(&to_int(first_elf[0]))
-                && second_elf_range.contains(&to_int(first_elf[1]))
+                || second_elf_range.contains(&to_int(first_elf[1]))
             {
                 return 1;
             }
