@@ -1,4 +1,3 @@
-use itertools::Itertools;
 use std::collections::HashSet;
 use std::fs;
 
@@ -6,9 +5,6 @@ fn main() {
     let file_path = "./input.txt".to_string();
 
     let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
-
-    let mut equal_chars: Vec<char> = vec![];
-    let mut total_points: usize = 0;
 
     let lines: Vec<&str> = contents.trim().split('\n').collect();
 
@@ -21,8 +17,7 @@ fn main() {
 
             //let i1: HashSet<char> = s0.intersection(&s1);
             let i1: HashSet<char> = first_line
-                .intersection(&second_line)
-                .map(|x| x.clone())
+                .intersection(&second_line).copied()
                 .collect();
             let i2: String = i1.intersection(&third_line).take(1).collect();
             i2.chars().next().unwrap()
