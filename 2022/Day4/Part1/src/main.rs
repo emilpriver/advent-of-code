@@ -9,15 +9,15 @@ fn main() {
 
     let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
 
-    let lines: Vec<&str> = contents.split("\n").collect();
+    let lines: Vec<&str> = contents.split('\n').collect();
 
     let sum: usize = lines
         .into_iter()
         .filter(|x| !x.is_empty())
         .map(|line| {
-            let elfs: Vec<&str> = line.split(",").collect();
-            let first_elf: Vec<&str> = elfs[0].split("-").collect();
-            let second_elf: Vec<&str> = elfs[1].split("-").collect();
+            let elfs: Vec<&str> = line.split(',').collect();
+            let first_elf: Vec<&str> = elfs[0].split('-').collect();
+            let second_elf: Vec<&str> = elfs[1].split('-').collect();
             [first_elf, second_elf]
         })
         .map(|chunk| {
