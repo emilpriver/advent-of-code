@@ -20,7 +20,8 @@ fn main() {
         .map(|chunk| {
             let [first_line, second_line, third_line] = chunk; 
             let i1: HashSet<char> = first_line
-                .intersection(&second_line).copied()
+                .intersection(&second_line)
+                .copied()
                 .collect();
             let i2: String = i1.intersection(&third_line).take(1).collect();
             i2.chars().next().unwrap()
