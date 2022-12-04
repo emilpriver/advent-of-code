@@ -13,13 +13,16 @@ fn main() {
     let lines: Vec<&str> = contents.trim().split('\n').collect();
 
     lines.chunks(3).map(|chunk| {
-        let [first_line, second_line, third_line] = chunk;
+        let first_line: HashSet<char> = chunk[0].chars().collect();
+        let second_line: HashSet<char> = chunk[1].chars().collect();
+        let third_line: HashSet<char> = chunk[2].chars().collect();
+
         let first_part_array: Vec<char> =
-            first_line.chars().into_iter().unique().collect();
+            first_line.into_iter().unique().collect();
         let second_part_array: Vec<char> =
-            second_line.chars().into_iter().unique().collect();
+            second_line.into_iter().unique().collect();
         let mut third_part_array: Vec<char> =
-            third_line.chars().into_iter().unique().collect();
+            third_line.into_iter().unique().collect();
 
         for x in &first_part_array {
             for y in &second_part_array {
