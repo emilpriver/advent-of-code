@@ -14,8 +14,11 @@ fn main() {
             let first_line: HashSet<char> = chunk[0].chars().collect();
             let second_line: HashSet<char> = chunk[1].chars().collect();
             let third_line: HashSet<char> = chunk[2].chars().collect();
-
-            //let i1: HashSet<char> = s0.intersection(&s1);
+            
+            [first_line, second_line, third_line] 
+        })
+        .map(|chunk| {
+            let [first_line, second_line, third_line] = chunk; 
             let i1: HashSet<char> = first_line
                 .intersection(&second_line).copied()
                 .collect();
