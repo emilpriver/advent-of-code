@@ -9,7 +9,7 @@ fn main() {
 
     for line in lines {
         if line.contains('[') {
-            let elements = line
+            let mut elements = line
                 .chars()
                 .collect::<Vec<char>>()
                 .chunks(4)
@@ -21,7 +21,9 @@ fn main() {
                     structure.push(Vec::new())
                 }
 
-                structure[index].push(el.trim().to_string());
+                if !el.trim().is_empty() {
+                    structure[index].insert(0, el.trim().to_string());
+                }
             }
         }
     }
@@ -37,7 +39,7 @@ fn main() {
 
         let instructions: Vec<usize> = line
             .split(' ')
-            .filter(|x| !x.is_empty() && x.chars().all(|x| x.is_ascii_digit()))
+            .filter(|x| !x.trim().is_empty() && x.chars().all(|x| x.is_ascii_digit()))
             .map(|x| x.trim().parse::<usize>().unwrap())
             .collect();
 
@@ -46,19 +48,19 @@ fn main() {
         let to = instructions[2];
 
         for _ in 0..amount {
-            if let Some(x) = structure[from - 1].pop() {
-                structure[to - 1].push(x);
+            if let Some(x) = &structure[from - 1].pop() {
+                structure[to - 1].push(x.to_string());
             }
         }
     }
 
     let mut first_row: Vec<String> = vec![];
     for c in &structure {
-        first_row.push(c.get(0).unwrap().to_string())
+        let mut char: Vec<&String> = c.iter().filter(|x| !x.is_empty()).collect();
+        let value = &char.pop().unwrap();
+        first_row.push(value.to_string())
     }
 
-    let first_row_as_word = first_row
-        .join("")
-        .replace(['[', ']', ' '], "");
+    let first_row_as_word = first_row.join("").replace(['[', ']', ' '], "");
     println!("{:?}", first_row_as_word)
 }
