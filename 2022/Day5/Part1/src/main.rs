@@ -59,10 +59,6 @@ fn main() {
 
     let first_row_as_word = first_row
         .join("")
-        .replace("[", "")
-        .replace("]", "")
-        .chars()
-        .filter(|c| c.is_ascii())
-        .collect::<String>();
+        .replace(['[', ']', ' '], "");
     println!("{:?}", first_row_as_word)
 }
