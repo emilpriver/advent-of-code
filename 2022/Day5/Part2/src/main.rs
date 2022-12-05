@@ -9,7 +9,7 @@ fn main() {
 
     for line in lines {
         if line.contains('[') {
-            let mut elements = line
+            let elements = line
                 .chars()
                 .collect::<Vec<char>>()
                 .chunks(4)
@@ -47,12 +47,11 @@ fn main() {
         let from = instructions[1];
         let to = instructions[2];
 
-        let start_position = structure[from - 1].len() - amount;
-        let elements = &structure[from - 1].as_slice()[start_position..].to_vec();
-        
-        let new_slice = [&structure[from - 1], elements.as_slice()].concat();
-        structure[to - 1] = new_slice;
-        structure[from - 1].drain(start_position..);
+        if !structure[from - 1].is_empty() {
+            let start_position = structure[from - 1].len() - amount;
+            let mut v = structure[from - 1].split_off(start_position);
+            structure[to - 1].append(&mut v);
+        }
     }
 
     let mut first_row: Vec<String> = vec![];
