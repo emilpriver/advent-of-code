@@ -21,7 +21,7 @@ fn calculate_space(input: String) -> usize {
         if !["$", "dir"].contains(&chars[0]) {
             let file_size = chars[0].parse::<usize>().unwrap();
             let mut path = current_path.clone();
-            
+
             loop {
                 *file_sizes
                     .entry(path.to_string_lossy().to_string())
@@ -33,10 +33,11 @@ fn calculate_space(input: String) -> usize {
         }
     }
 
-    file_sizes
+    *file_sizes
         .values()
-        .filter(|x| x < &&100_000)
-        .sum::<usize>()
+        .filter(|x| x > &&(30_000_000 - (70_000_000 - file_sizes["/"])))
+        .min()
+        .unwrap()
 }
 
 fn main() {
@@ -60,6 +61,6 @@ mod tests {
         let contents: String =
             fs::read_to_string(file_path).expect("Should have been able to read the file");
 
-        assert_eq!(calculate_space(contents), 95437);
+        assert_eq!(calculate_space(contents), 24933642);
     }
 }
