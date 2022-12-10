@@ -1,8 +1,7 @@
 use std::fs;
 
-fn julmust(input: String) -> i64 {
+fn julmust(input: String) -> usize {
     let lines = input.lines();
-    let score_index: [i64; 6] = [20, 60, 100, 140, 180, 220];
 
     let scores = lines.fold(vec![1], |mut instruct, value| {
         instruct.push(instruct[instruct.len() - 1]);
@@ -14,20 +13,19 @@ fn julmust(input: String) -> i64 {
         instruct
     });
 
-    let values = scores
-        .clone()
-        .into_iter()
-        .enumerate()
-        .map(|(i, _)| {
-            let index_as_int = i as i64;
-            if score_index.contains(&(index_as_int)) {
-                return index_as_int * scores[i - 1];
-            };
+    scores.chunks(40).for_each(|x| {
+        for (i, c) in x.iter().enumerate() {
+            if (i as i64 - c).abs() <= 1 {
+                print!("#");
+            } else {
+                print!(".");
+            }
+        }
 
-            0
-        });
-    
-    values.sum()
+        println!();
+    });
+
+    0
 }
 
 fn main() {
@@ -50,6 +48,6 @@ mod tests {
 
         let contents: String =
             fs::read_to_string(file_path).expect("Should have been able to read the file");
-        assert_eq!(julmust(contents), 13140);
+        assert_eq!(julmust(contents), 1);
     }
 }
