@@ -6,11 +6,13 @@ fn julmust(input: String) -> i64 {
 
     let scores = lines.fold(vec![1], |mut instruct, value| {
         instruct.push(instruct[instruct.len() - 1]);
+        
         if let Some((a, b)) = value.split_once(' ') {
             if !a.contains("noop") {
                 instruct.push(instruct.last().unwrap() + b.parse::<i64>().unwrap());
             };
         };
+
         instruct
     });
 
