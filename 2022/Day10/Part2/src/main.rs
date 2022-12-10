@@ -17,11 +17,7 @@ fn julmust(input: String) -> usize {
 
     scores.chunks(40).for_each(|x| {
         for (i, c) in x.iter().enumerate() {
-            if (i as i64 - c).abs() <= 1 {
-                print!("#");
-            } else {
-                print!(".");
-            }
+            print!("{}", if (i as i64 - c).abs() <= 1 {"#"} else {"."});
         }
 
         println!();
