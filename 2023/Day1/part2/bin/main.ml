@@ -1,10 +1,23 @@
+open String
+
 let get_numbers_from_string (str: string) : int array =
   let nums = ref [] in
+  let matches = ["zero"; "one"; "two"; "three"; "four"; "five"; "six"; "seven"; "eight"; "nine"] in
+
   for i = 0 to String.length str - 1 do
     match str.[i] with
-    | '0'..'9' -> nums := int_of_char str.[i] - int_of_char '0' :: !nums
-    | _ -> ()
+    | '0'..'9' ->
+      nums := int_of_char str.[i] - int_of_char '0' :: !nums
+    | _ ->
+      let len = String.length str in
+      let word = String.sub str i (len - i) in
+      for i = 0 to List.length matches - 1 do
+        let match_word = List.nth matches i in
+        if starts_with ~prefix:match_word word then
+          nums := i - 0 :: !nums
+      done
   done;
+
   Array.of_list (List.rev !nums)
 
 let () =
