@@ -1,4 +1,4 @@
-let check_diagonal str =
+let check_diagonal start_pos str =
   print_string str
 
 let line_into_list str =
